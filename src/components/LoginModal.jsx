@@ -25,8 +25,15 @@ export default function LoginModal({ isOpen, onClose, navigate }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const { login } = useAuth();
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -121,7 +128,7 @@ export default function LoginModal({ isOpen, onClose, navigate }) {
 
         {/* Left Side Image/Panel */}
         <motion.div
-          animate={{ x: isRegistering ? "100%" : "0%" }}
+          animate={{ x: isMobile ? 0 : (isRegistering ? "100%" : "0%") }}
           transition={{ type: "spring", stiffness: 80, damping: 15 }}
           className="relative items-center justify-center hidden w-1/2 p-8 text-white md:flex overflow-hidden"
         >
@@ -133,7 +140,7 @@ export default function LoginModal({ isOpen, onClose, navigate }) {
 
         {/* Right Side Form */}
         <motion.div
-          animate={{ x: isRegistering ? "-100%" : "0%" }}
+          animate={{ x: isMobile ? 0 : (isRegistering ? "-100%" : "0%") }}
           transition={{ type: "spring", stiffness: 80, damping: 15 }}
           className="w-full p-8 md:w-1/2"
         >
