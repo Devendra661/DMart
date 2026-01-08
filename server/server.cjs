@@ -87,13 +87,6 @@ mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Serve Frontend
-app.use(express.static(path.join(__dirname, '../dist')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
-});
-
 // Registration Route
 app.post('/api/register', async (req, res) => {
   const { name, email, phone, password } = req.body;
@@ -140,11 +133,13 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Serve Frontend
+app.use(express.static(path.join(__dirname, '../dist')));
 
-
-
-
-
+// Catch-all for frontend (Must be last)
+app.get(/(.*)/, (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+});
 
 io.on('connection', (socket) => {
   console.log('a user connected');
