@@ -62,20 +62,17 @@ export default function Home() {
     { quote: "Fresh produce delivered right to my door. It makes my life so much easier.", name: "Charlie Brown", title: "Busy Parent", image: "https://via.placeholder.com/100/3357FF/FFFFFF?text=CB" },
   ];
 
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [[page, direction], setPage] = useState([0, 0]);
+  const imageIndex = Math.abs(page % testimonials.length);
 
-  const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
   };
 
   useEffect(() => {
-    const timer = setInterval(nextTestimonial, 5000); // Auto-advance every 5 seconds
+    const timer = setInterval(() => paginate(1), 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [page]);
 
 
 
@@ -215,37 +212,59 @@ export default function Home() {
       <section className="py-12 px-4 md:py-16 md:px-6 bg-white">
         <div className="container mx-auto text-center">
           <SectionHeading title="What Our Customers Say" />
-          <div className="relative max-w-3xl mx-auto">
-            <AnimatePresence mode="wait">
+          <div className="relative max-w-3xl mx-auto h-72 overflow-hidden">
+            <AnimatePresence initial={false} custom={direction}>
               <motion.div
-                key={currentTestimonial}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.5 }}
-                className="bg-gray-50 p-8 rounded-lg shadow-lg flex flex-col justify-between h-72"
+                key={page}
+                custom={direction}
+                variants={{
+                  enter: (direction) => ({
+                    x: direction > 0 ? 1000 : -1000,
+                    opacity: 0
+                  }),
+                  center: {
+                    zIndex: 1,
+                    x: 0,
+                    opacity: 1
+                  },
+                  exit: (direction) => ({
+                    zIndex: 0,
+                    x: direction < 0 ? 1000 : -1000,
+                    opacity: 0
+                  })
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 }
+                }}
+                className="absolute w-full bg-gray-50 p-8 rounded-lg shadow-lg flex flex-col justify-between h-full"
               >
-                <img src={testimonials[currentTestimonial].image} alt={testimonials[currentTestimonial].name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
+                <img src={testimonials[imageIndex].image} alt={testimonials[imageIndex].name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
                 <p className="text-lg md:text-xl text-gray-700 mb-6">
-                  "{testimonials[currentTestimonial].quote}"
+                  "{testimonials[imageIndex].quote}"
                 </p>
-                <p className="font-semibold text-blue-600">
-                  - {testimonials[currentTestimonial].name}
-                </p>
-                <p className="text-sm text-gray-500">
-                  {testimonials[currentTestimonial].title}
-                </p>
+                <div>
+                  <p className="font-semibold text-blue-600">
+                    - {testimonials[imageIndex].name}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {testimonials[imageIndex].title}
+                  </p>
+                </div>
               </motion.div>
             </AnimatePresence>
             <button
-              onClick={prevTestimonial}
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-blue-500 text-white p-3 rounded-full shadow-md hover:bg-blue-600 transition"
+              onClick={() => paginate(-1)}
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-blue-500 text-white p-3 rounded-full shadow-md hover:bg-blue-600 transition z-10"
             >
               &lt;
             </button>
             <button
-              onClick={nextTestimonial}
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-blue-500 text-white p-3 rounded-full shadow-md hover:bg-blue-600 transition"
+              onClick={() => paginate(1)}
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-blue-500 text-white p-3 rounded-full shadow-md hover:bg-blue-600 transition z-10"
             >
               &gt;
             </button>
