@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import OrderDetailsModal from "../../components/OrderDetailsModal";
+import { API_BASE_URL } from '@/config';
+
 
 export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
@@ -16,7 +18,7 @@ export default function OrderHistory() {
   useEffect(() => {
     const fetchOrdersAndStatuses = async () => {
       try {
-        const ordersResponse = await fetch("http://localhost:5000/api/orders");
+        const ordersResponse = await fetch(`${API_BASE_URL}/api/orders`);
         if (!ordersResponse.ok) throw new Error(`HTTP error! status: ${ordersResponse.status}`);
         const ordersData = await ordersResponse.json();
 
@@ -25,7 +27,7 @@ export default function OrderHistory() {
         );
         setOrders(historicalOrders);
 
-        const statusesResponse = await fetch("http://localhost:5000/api/orders/statuses");
+        const statusesResponse = await fetch(`${API_BASE_URL}/api/orders/statuses`);
         if (!statusesResponse.ok) throw new Error(`HTTP error! status: ${statusesResponse.status}`);
         const statusesData = await statusesResponse.json();
         setAvailableStatuses(statusesData.filter(status => status === "Delivered" || status === "Cancelled"));

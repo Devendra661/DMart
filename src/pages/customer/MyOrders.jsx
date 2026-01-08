@@ -4,6 +4,8 @@ import { FaBoxOpen, FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import io from 'socket.io-client';
 import socket from '../../utils/socket';
+import { API_BASE_URL } from '@/config';
+
 
 export default function MyOrders() {
   const { user, userId } = useAuth();
@@ -19,7 +21,7 @@ export default function MyOrders() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/orders/user/${userId}`);
+      const response = await fetch(`${API_BASE_URL}/api/orders/user/${userId}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

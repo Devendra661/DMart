@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: dmart-backend
+    env: node
+    root: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: PORT
+        value: 10000
+      - key: CLIENT_URL
+        fromService:
+          type: static
+          name: dmart-frontend
+          property: url
+    disk:
+      name: uploads
+      mountPath: /opt/render/project/src/server/uploads
+      sizeGB: 1
+
+  - type: static
+    name: dmart-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: dmart-backend
+          property: url

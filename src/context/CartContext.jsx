@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import toast from 'react-hot-toast';
+import { API_BASE_URL } from '../config';
 
 const CartContext = createContext();
 
@@ -13,7 +14,7 @@ export const CartProvider = ({ children }) => {
   const fetchCart = async () => {
     if (!userId) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/cart/${userId}`);
+      const response = await fetch(`${API_BASE_URL}/api/cart/${userId}`);
       if (response.ok) {
         const data = await response.json();
         setCart(data);
@@ -31,7 +32,7 @@ export const CartProvider = ({ children }) => {
     if (!userId) return;
     const loadingToast = toast.loading("Updating cart...");
     try {
-      const response = await fetch(`http://localhost:5000/api/cart/${userId}/${productId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/cart/${userId}/${productId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +55,7 @@ export const CartProvider = ({ children }) => {
     if (!userId) return;
     const loadingToast = toast.loading("Removing item...");
     try {
-      const response = await fetch(`http://localhost:5000/api/cart/${userId}/${productId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/cart/${userId}/${productId}`, {
         method: 'DELETE',
       });
       if (response.ok) {

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
 import { useCart } from '../context/CartContext';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '@/config';
+
 
 export default function Cart() {
   const { cart, updateCartItemQuantity, removeCartItem } = useCart();
@@ -74,7 +76,7 @@ export default function Cart() {
               <tr key={item.productId._id} className="border-b">
                 <td className="py-3 px-4">{index + 1}</td>
                 <td className="py-3 px-4">
-                  <img src={`http://localhost:5000${item.imageUrl}`} alt={item.name} className="w-16 h-16 object-cover rounded" />
+                  <img src={`${API_BASE_URL}${item.imageUrl}`} alt={item.name} className="w-16 h-16 object-cover rounded" />
                 </td>
                 <td className="py-3 px-4">{item.name}</td>
                 <td className="py-3 px-4">

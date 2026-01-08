@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
 import SectionHeading from "../components/SectionHeading";
 import { motion } from "framer-motion";
+import { API_BASE_URL } from '@/config';
+
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -29,7 +31,7 @@ export default function Contact() {
 
     const loadingToast = toast.loading("Sending message...");
     try {
-      const response = await axios.post("http://localhost:5000/api/messages", formData);
+      const response = await axios.post(`${API_BASE_URL}/api/messages`, formData);
       setSuccess(response.data.message);
       setFormData({ senderName: "", senderEmail: "", subject: "", message: "" });
       toast.success("Message sent successfully!", { id: loadingToast });

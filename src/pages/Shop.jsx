@@ -4,6 +4,8 @@ import ProductCard from "../components/ProductCard";
 import SectionHeading from "../components/SectionHeading";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import { API_BASE_URL } from '@/config';
+
 
 export default function Shop() {
   const [products, setProducts] = useState([]);
@@ -13,7 +15,7 @@ export default function Shop() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE_URL = "http://localhost:5000/api";
+  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   useEffect(() => {
     const fetchProductsAndCategories = async () => {
@@ -82,7 +84,7 @@ export default function Shop() {
                   <img
                     src={
                       firstProduct?.imageUrl
-                        ? `http://localhost:5000${firstProduct.imageUrl}`
+                        ? `${API_BASE_URL}${firstProduct.imageUrl}`
                         : "https://via.placeholder.com/150"
                     }
                     alt={firstProduct?.name || cat.name}

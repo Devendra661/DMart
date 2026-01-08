@@ -3,6 +3,8 @@ import { FaTrash } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext'; // Import useAuth
 import toast from 'react-hot-toast'; // Import toast
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '@/config';
+
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -28,8 +30,8 @@ export default function Checkout() {
       }
       try {
         const [cartResponse, userResponse] = await Promise.all([
-          fetch(`http://localhost:5000/api/cart/${userId}`),
-          fetch(`http://localhost:5000/api/user/${userId}`),
+          fetch(`${API_BASE_URL}/api/cart/${userId}`),
+          fetch(`${API_BASE_URL}/api/user/${userId}`),
         ]);
 
         const cartData = await cartResponse.json();
@@ -82,7 +84,7 @@ export default function Checkout() {
     const newQuantity = item.quantity + delta;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/cart/${userId}/${productId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/cart/${userId}/${productId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +106,7 @@ export default function Checkout() {
     if (!userId) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/cart/${userId}/${productId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/cart/${userId}/${productId}`, {
         method: 'DELETE',
       });
       const data = await response.json();
@@ -149,7 +151,7 @@ export default function Checkout() {
 
       // Save the new address to the user's profile
       try {
-        const saveAddressResponse = await fetch(`http://localhost:5000/api/user/${userId}/address`, {
+        const saveAddressResponse = await fetch(`${API_BASE_URL}/api/user/${userId}/address`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -178,7 +180,7 @@ export default function Checkout() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/orders', {
+      const response = await fetch(`${API_BASE_URL}/api/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -675,7 +677,7 @@ export default function Checkout() {
             {cartItems.map((item) => (
               <div key={item.productId} className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <img src={`http://localhost:5000${item.imageUrl}`} alt={item.name} className="w-16 h-16 object-cover rounded mr-4" />
+                  <img src={`${API_BASE_URL}${item.imageUrl}`} alt={item.name} className="w-16 h-16 object-cover rounded mr-4" />
                   <div>
                     <h4 className="font-semibold">{item.name}</h4>
                     <div className="flex items-center mt-2">

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { FaHeart, FaShoppingCart, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { useCart } from "../../context/CartContext";
+import { API_BASE_URL } from '@/config';
+
 
 export default function Wishlist() {
   const { userId } = useAuth();
@@ -12,7 +14,7 @@ export default function Wishlist() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE_URL = "http://localhost:5000/api";
+  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   const fetchWishlist = async () => {
     if (!userId) {
@@ -118,7 +120,7 @@ export default function Wishlist() {
             <div key={product._id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col">
               <Link to={`/shop-detail/${product._id}`}>
                 <img
-                  src={`http://localhost:5000${product.imageUrl}`}
+                  src={`${API_BASE_URL}${product.imageUrl}`}
                   alt={product.name}
                   className="w-full h-48 object-cover"
                 />

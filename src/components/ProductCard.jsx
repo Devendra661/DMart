@@ -4,13 +4,15 @@ import { FaHeart, FaStar, FaShoppingCart } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import { useCart } from "../context/CartContext";
+import { API_BASE_URL } from '@/config';
+
 
 const ProductCard = ({ product }) => {
   const { userId } = useAuth();
   const { fetchCart } = useCart();
   const [isWishlisted, setIsWishlisted] = useState(false);
 
-  const API_BASE_URL = "http://localhost:5000/api";
+  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Check wishlist
   useEffect(() => {
@@ -108,7 +110,7 @@ const ProductCard = ({ product }) => {
   {/* Image Section */}
   <div className="relative p-6 bg-white">
     <img
-      src={`http://localhost:5000${product.imageUrl}`}
+      src={`${API_BASE_URL}${product.imageUrl}`}
       alt={product.name}
       className="object-contain w-full h-48 mx-auto"
     />

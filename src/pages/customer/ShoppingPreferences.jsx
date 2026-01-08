@@ -3,6 +3,8 @@ import { FaCreditCard, FaHeart, FaShoppingCart, FaMapMarkerAlt } from "react-ico
 import { useAuth } from "../../context/AuthContext"; // Import useAuth
 import axios from "axios"; // Import axios
 import toast from 'react-hot-toast'; // Import toast
+import { API_BASE_URL } from '@/config';
+
 
 export default function ShoppingPreferences() {
   const { userId } = useAuth(); // Get userId from AuthContext
@@ -14,7 +16,7 @@ export default function ShoppingPreferences() {
   const [cartReminder, setCartReminder] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const API_BASE_URL = "http://localhost:5000/api";
+  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Fetch user preferences and addresses
   useEffect(() => {

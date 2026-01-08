@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import { API_BASE_URL } from '../config';
 
 const NotificationContext = createContext();
 
@@ -10,7 +11,7 @@ export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const socket = io(API_BASE_URL);
 
     socket.on('connect', () => {
       console.log('Connected to Socket.IO server');

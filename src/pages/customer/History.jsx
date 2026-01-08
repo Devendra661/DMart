@@ -3,6 +3,8 @@ import { useAuth } from '../../context/AuthContext';
 import OrderDetailsModal from '../../components/OrderDetailsModal';
 import io from 'socket.io-client';
 import socket from '../../utils/socket';
+import { API_BASE_URL } from '@/config';
+
 
 export default function History() {
   const [orders, setOrders] = useState([]);
@@ -35,8 +37,8 @@ export default function History() {
     try {
       setLoading(true);
       const [ordersResponse, userResponse] = await Promise.all([
-        fetch(`http://localhost:5000/api/orders/user/${userId}`),
-        fetch(`http://localhost:5000/api/user/${userId}`),
+        fetch(`${API_BASE_URL}/api/orders/user/${userId}`),
+        fetch(`${API_BASE_URL}/api/user/${userId}`),
       ]);
 
       const ordersData = await ordersResponse.json();
