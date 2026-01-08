@@ -11,7 +11,7 @@ const AutoSlider = ({ images, height = '50vh' }) => {
   }, [images.length]);
 
   return (
-    <div className="relative w-full overflow-hidden" style={{ height }}>
+    <div className="relative w-full overflow-hidden h-[30vh] sm:h-[50vh] md:h-[60vh] lg:h-[72vh]">
       {images.map((image, index) => (
         <div
           key={index}

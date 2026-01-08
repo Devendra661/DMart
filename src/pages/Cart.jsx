@@ -7,7 +7,7 @@ import { API_BASE_URL } from '@/config';
 
 
 export default function Cart() {
-  const { cart, updateCartItemQuantity, removeCartItem } = useCart();
+  const { cart, isLoading, updateCartItemQuantity, removeCartItem } = useCart();
   const cartItems = cart ? cart.items : [];
 
   const handleQuantityChange = (productId, delta) => {
@@ -28,8 +28,16 @@ export default function Cart() {
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
+  if (isLoading && !cart) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   if (!cart) {
-    return <div>Loading cart...</div>;
+     return <div className="text-center py-8">Error loading cart.</div>;
   }
 
   if (cartItems.length === 0) {

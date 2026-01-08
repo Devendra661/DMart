@@ -9,11 +9,16 @@ export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { userId } = useAuth();
 
   const fetchCart = async () => {
-    if (!userId) return;
+    if (!userId) {
+      setIsLoading(false);
+      return;
+    }
     try {
+      setIsLoading(true);
       const response = await fetch(`${API_BASE_URL}/api/cart/${userId}`);
       if (response.ok) {
         const data = await response.json();
@@ -25,6 +30,8 @@ export const CartProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Failed to fetch cart', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -77,6 +84,7 @@ export const CartProvider = ({ children }) => {
 
   const value = {
     cart,
+    isLoading,
     fetchCart,
     updateCartItemQuantity,
     removeCartItem,

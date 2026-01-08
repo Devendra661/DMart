@@ -14,16 +14,6 @@ export default function Footer() {
             <img src={logo} alt="DMart Logo" className="h-10" />
             <h2 className="text-2xl font-bold text-blue-600">DMart</h2>
           </div>
-          <div className="flex w-full lg:w-auto">
-            <input
-              type="email"
-              placeholder="Your Email"
-              className="flex-1 px-4 py-2 text-gray-800 rounded-l-full lg:w-96 focus:outline-none"
-            />
-            <button className="px-6 py-2 font-medium text-white rounded-r-full bg-blue-500 hover:bg-blue-600">
-              Subscribe Now
-            </button>
-          </div>
         </div>
 
         {/* Footer Links */}
