@@ -20,53 +20,55 @@ export default function CustomerNavbar({ isCollapsed, setIsCollapsed }) {
     { name: 'Logout', icon: FaSignOutAlt, action: logout },
   ];
 
-  const containerVariants = {
-    hidden: { x: '100%', opacity: 0 },
-    visible: { x: 0, opacity: 1, transition: { type: 'spring', stiffness: 120, damping: 20 } },
-  };
-
   return (
-    <motion.nav
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className={`fixed top-16 right-0 bg-white shadow-lg flex flex-col rounded-l-2xl transition-width duration-300 ${isCollapsed ? 'w-24' : 'w-64'}`}
-      style={{ height: 'calc(100vh - 64px)' }}
-    >
-      <div className="flex items-center justify-between p-4 border-b">
-        {!isCollapsed && <h2 className="text-lg font-semibold">My Account</h2>}
-        <button onClick={() => setIsCollapsed(!isCollapsed)} className="text-gray-700 focus:outline-none">
-          {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
-        </button>
-      </div>
+    <>
+      {/* Toggle Button (Always Visible) */}
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className="fixed top-20 right-0 z-50 p-3 text-white bg-blue-600 rounded-l-full shadow-lg hover:bg-blue-700 focus:outline-none transition-transform duration-300"
+        style={{ transform: isCollapsed ? 'translateX(0)' : 'translateX(-16rem)' }} // Move with the navbar
+      >
+        {isCollapsed ? <FaChevronLeft /> : <FaChevronRight />}
+      </button>
 
-      <div className="flex flex-col flex-grow gap-4 p-2">
-        {navLinks.map((link) =>
-          link.path ? (
-            <NavLink
-              key={link.name}
-              to={link.path}
-              className={({ isActive }) =>
-                `flex items-center py-3 px-4 rounded-xl transition-all duration-300 transform
-                 ${isActive ? 'bg-gradient-to-r from-blue-100 to-blue-50 shadow-md text-blue-600 scale-105' : 'text-gray-700 hover:bg-blue-50 hover:scale-105 hover:shadow-lg'}
-                 ${isCollapsed ? 'justify-center' : ''}`
-              }
-            >
-              {React.createElement(link.icon, { className: `h-6 w-6 ${!isCollapsed ? 'mr-3' : ''}` })}
-              {!isCollapsed && <span className="font-medium">{link.name}</span>}
-            </NavLink>
-          ) : (
-            <button
-              key={link.name}
-              onClick={link.action}
-              className={`flex items-center w-full py-3 px-4 rounded-xl text-red-600 transition-all duration-300 transform hover:bg-red-50 hover:scale-105 hover:shadow-lg ${isCollapsed ? 'justify-center' : ''}`}
-            >
-              {React.createElement(link.icon, { className: `h-6 w-6 ${!isCollapsed ? 'mr-3' : ''}` })}
-              {!isCollapsed && <span className="font-medium">{link.name}</span>}
-            </button>
-          )
-        )}
-      </div>
-    </motion.nav>
+      {/* Navbar Panel */}
+      <motion.nav
+        initial={{ x: '100%' }}
+        animate={{ x: isCollapsed ? '100%' : '0%' }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        className="fixed top-16 right-0 z-40 bg-white shadow-2xl flex flex-col h-[calc(100vh-64px)] w-64 rounded-l-2xl"
+      >
+        <div className="flex items-center justify-between p-4 border-b bg-blue-50 rounded-tl-2xl">
+          <h2 className="text-lg font-bold text-gray-800">My Account</h2>
+        </div>
+
+        <div className="flex flex-col flex-grow gap-2 p-4 overflow-y-auto">
+          {navLinks.map((link) =>
+            link.path ? (
+              <NavLink
+                key={link.name}
+                to={link.path}
+                className={({ isActive }) =>
+                  `flex items-center py-3 px-4 rounded-xl transition-all duration-300
+                   ${isActive ? 'bg-blue-100 text-blue-700 font-semibold shadow-sm' : 'text-gray-600 hover:bg-gray-100'}`
+                }
+              >
+                <link.icon className="w-5 h-5 mr-3" />
+                <span>{link.name}</span>
+              </NavLink>
+            ) : (
+              <button
+                key={link.name}
+                onClick={link.action}
+                className="flex items-center w-full py-3 px-4 mt-auto text-red-600 rounded-xl hover:bg-red-50 transition-all duration-300"
+              >
+                <link.icon className="w-5 h-5 mr-3" />
+                <span className="font-medium">{link.name}</span>
+              </button>
+            )
+          )}
+        </div>
+      </motion.nav>
+    </>
   );
 }

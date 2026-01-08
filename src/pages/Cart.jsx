@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 import { API_BASE_URL } from '@/config';
 
 
 export default function Cart() {
   const { cart, isLoading, updateCartItemQuantity, removeCartItem } = useCart();
+  const { isLoggedIn } = useAuth();
   const cartItems = cart ? cart.items : [];
 
   const handleQuantityChange = (productId, delta) => {
@@ -27,6 +29,25 @@ export default function Cart() {
   };
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  if (!isLoggedIn) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="container mx-auto px-4 py-8 text-center"
+      >
+        <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
+        <p className="text-xl text-gray-600">Please login to view your cart items.</p>
+        <Link to="/">
+          <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Go to Home
+          </button>
+        </Link>
+      </motion.div>
+    );
+  }
 
   if (isLoading && !cart) {
     return (
