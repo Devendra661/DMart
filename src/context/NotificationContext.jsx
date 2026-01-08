@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import io from 'socket.io-client';
-import { API_BASE_URL } from '../config';
+import socket from '../utils/socket';
 
 const NotificationContext = createContext();
 
@@ -11,7 +10,7 @@ export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    const socket = io(API_BASE_URL);
+    // socket is already initialized in utils/socket.js
 
     socket.on('connect', () => {
       console.log('Connected to Socket.IO server');
@@ -37,7 +36,9 @@ export const NotificationProvider = ({ children }) => {
     });
 
     return () => {
-      socket.disconnect();
+      socket.off('connect');
+      socket.off('new_order');
+      socket.off('disconnect');
     };
   }, []);
 

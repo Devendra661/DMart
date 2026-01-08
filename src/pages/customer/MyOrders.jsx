@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { FaBoxOpen, FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import io from 'socket.io-client';
 import socket from '../../utils/socket';
 import { API_BASE_URL } from '@/config';
 
@@ -77,7 +76,7 @@ export default function MyOrders() {
                 <h2 className="text-xl font-semibold text-gray-800 mb-2">Order ID: {order._id}</h2>
                 <div className="flex items-center text-gray-600 text-sm mb-1">
                   <FaCalendarAlt className="mr-2" />
-                  <span>{new Date(order.createdAt).toLocaleDateString()}</span>
+                  <span>{new Date(order.createdAt).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center text-gray-600 text-sm">
                   <span>Total: ₹{order.totalAmount.toFixed(2)}</span>

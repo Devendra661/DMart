@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import toast from 'react-hot-toast';
 import OrderDetailsModal from "../../components/OrderDetailsModal";
+import socket from '../../utils/socket';
 import { API_BASE_URL } from '@/config';
 
 
@@ -43,6 +44,21 @@ export default function ManageOrders() {
       }
     };
     fetchOrdersAndStatuses();
+
+    socket.on('new_order', () => {
+      console.log('New order received, refreshing...');
+      fetchOrdersAndStatuses();
+    });
+
+    socket.on('order_status_updated', () => {
+      console.log('Order status updated, refreshing...');
+      fetchOrdersAndStatuses();
+    });
+
+    return () => {
+      socket.off('new_order');
+      socket.off('order_status_updated');
+    };
   }, [currentPage]);
 
   const handleViewDetails = (order) => {
@@ -168,7 +184,7 @@ export default function ManageOrders() {
                       order.orderStatus === 'Cancelled' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
                     }`}>{order.orderStatus}</span>
                   </td>
-                  <td className="px-6 py-2 text-sm text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</td>
+                  <td className="px-6 py-2 text-sm text-gray-500">{new Date(order.createdAt).toLocaleString()}</td>
                   <td className="relative flex flex-col flex-wrap justify-end gap-1 px-6 py-2 text-sm font-medium sm:flex-nowrap">
                     <button
                       onClick={() => handleViewDetails(order)}

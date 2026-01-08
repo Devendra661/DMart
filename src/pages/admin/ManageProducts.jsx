@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from 'react-hot-toast';
 import EditProductModal from "../../components/EditProductModal";
+import socket from '../../utils/socket';
 import { API_BASE_URL } from '@/config';
 
 
@@ -40,6 +41,14 @@ export default function ManageProducts() {
 
   useEffect(() => {
     loadProducts(currentPage);
+
+    socket.on('new_order', () => {
+      loadProducts(currentPage);
+    });
+
+    return () => {
+      socket.off('new_order');
+    };
   }, [currentPage, searchTerm]); // Add searchTerm to dependency array
 
   // ✅ Handle Edit
