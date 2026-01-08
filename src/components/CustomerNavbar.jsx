@@ -48,6 +48,7 @@ export default function CustomerNavbar({ isCollapsed, setIsCollapsed }) {
               <NavLink
                 key={link.name}
                 to={link.path}
+                onClick={() => setIsCollapsed(true)}
                 className={({ isActive }) =>
                   `flex items-center py-3 px-4 rounded-xl transition-all duration-300
                    ${isActive ? 'bg-blue-100 text-blue-700 font-semibold shadow-sm' : 'text-gray-600 hover:bg-gray-100'}`
