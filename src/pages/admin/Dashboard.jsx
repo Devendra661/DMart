@@ -247,7 +247,7 @@ export default function Dashboard() {
                 {mostBuyingProducts.map((product) => (
                   <div key={product.name} className="flex items-center gap-4">
                     <div className="text-xl font-bold text-gray-600">{product.rank}.</div>
-                    <img src={`${CONFIG_URL}${product.imageUrl}`} alt={product.name} className="object-cover w-16 h-16 rounded-lg" />
+                    <img src={`${API_BASE_URL}${product.imageUrl}`} alt={product.name} className="object-cover w-16 h-16 rounded-lg" />
                     <div className="flex-1">
                       <p className="font-medium text-gray-800">{product.name}</p>
                       <p className="text-sm text-gray-500">{product.buyingPercentage}% of total sales</p>

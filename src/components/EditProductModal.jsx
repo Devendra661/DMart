@@ -183,7 +183,7 @@ function FileUpload({ currentImageUrl, setImage }) {
       <label className="block mb-1 font-medium text-gray-700">Product Image</label>
       {currentImageUrl && (
         <div className="mb-2">
-          <img src={`${API_BASE_URL}${currentImageUrl}`} alt="Current Product" className="object-cover w-24 h-24 rounded-md" />
+          <img src={`${CONFIG_URL}${currentImageUrl}`} alt="Current Product" className="object-cover w-24 h-24 rounded-md" />
           <p className="text-sm text-gray-500">Current Image</p>
         </div>
       )}
