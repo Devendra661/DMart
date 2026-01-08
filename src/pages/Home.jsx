@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { FaShippingFast, FaLock, FaUndo, FaHeadset, FaUsers, FaAward, FaCheckCircle, FaBoxOpen } from "react-icons/fa";
 import SectionHeading from "../components/SectionHeading";
-import { API_BASE_URL } from '@/config';
+import { API_BASE_URL as CONFIG_URL } from '@/config';
 
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
+  const API_BASE_URL = `${CONFIG_URL}/api`;
 
   const bannerImages = [
     "/discount_banners/b1.jpg",

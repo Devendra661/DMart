@@ -9,7 +9,7 @@ import {
 import { useAuth } from "../../context/AuthContext"; // Import useAuth
 import axios from "axios"; // Import axios
 import toast from 'react-hot-toast'; // Import toast
-import { API_BASE_URL } from '@/config';
+import { API_BASE_URL as CONFIG_URL } from '@/config';
 
 
 export default function AccountSettings() {
@@ -23,7 +23,7 @@ export default function AccountSettings() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
+  const API_BASE_URL = `${CONFIG_URL}/api`;
 
   // Fetch user data
   useEffect(() => {

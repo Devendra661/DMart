@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { FaUser, FaCamera, FaTimes, FaUserCircle, FaEnvelope, FaPhone, FaCalendarAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
-import { API_BASE_URL } from '@/config';
+import { API_BASE_URL as CONFIG_URL } from '@/config';
 
 
 export default function CustomerProfile() {
@@ -17,7 +17,7 @@ export default function CustomerProfile() {
   const [profileImage, setProfileImage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
+  const API_BASE_URL = `${CONFIG_URL}/api`;
 
   // Fetch profile
   useEffect(() => {

@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { FaIdBadge } from 'react-icons/fa';
-import { API_BASE_URL } from '@/config';
+import { API_BASE_URL as CONFIG_URL } from '@/config';
 
 
 export default function ManageUsers() {
@@ -12,7 +12,7 @@ export default function ManageUsers() {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
+  const API_BASE_URL = `${CONFIG_URL}/api`;
 
   // Fetch all users
   const fetchUsers = async () => {

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FaHeart, FaShoppingCart, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { useCart } from "../../context/CartContext";
-import { API_BASE_URL } from '@/config';
+import { API_BASE_URL as CONFIG_URL } from '@/config';
 
 
 export default function Wishlist() {
@@ -14,7 +14,7 @@ export default function Wishlist() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
+  const API_BASE_URL = `${CONFIG_URL}/api`;
 
   const fetchWishlist = async () => {
     if (!userId) {

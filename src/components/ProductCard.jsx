@@ -4,7 +4,7 @@ import { FaHeart, FaStar, FaShoppingCart } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import { useCart } from "../context/CartContext";
-import { API_BASE_URL } from '@/config';
+import { API_BASE_URL as CONFIG_URL } from '@/config';
 
 
 const ProductCard = ({ product }) => {
@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
   const { fetchCart } = useCart();
   const [isWishlisted, setIsWishlisted] = useState(false);
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
+  const API_BASE_URL = `${CONFIG_URL}/api`;
 
   // Check wishlist
   useEffect(() => {

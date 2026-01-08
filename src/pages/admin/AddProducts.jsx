@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from 'react-hot-toast';
-import { API_BASE_URL } from '@/config';
+import { API_BASE_URL as CONFIG_URL } from '@/config';
 
 export default function AddProducts() {
   const [name, setName] = useState("");
@@ -22,7 +22,7 @@ export default function AddProducts() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-  const API_BASE_URL = `${API_BASE_URL}/api`; // Adjust if your backend is on a different port/URL
+  const API_BASE_URL = `${CONFIG_URL}/api`; // Adjust if your backend is on a different port/URL
 
   useEffect(() => {
     fetchCategories();

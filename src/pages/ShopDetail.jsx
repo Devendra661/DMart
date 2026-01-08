@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import toast from 'react-hot-toast';
 import SectionHeading from "../components/SectionHeading";
-import { API_BASE_URL } from '@/config';
+import { API_BASE_URL as CONFIG_URL } from '@/config';
 
 
 export default function ShopDetail() {
@@ -18,7 +18,7 @@ export default function ShopDetail() {
   const [error, setError] = useState(null);
   const [isWishlisted, setIsWishlisted] = useState(false);
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
+  const API_BASE_URL = `${CONFIG_URL}/api`;
 
   useEffect(() => {
     const fetchProduct = async () => {
