@@ -40,7 +40,11 @@ export default function MyOrders() {
 
     socket.on('order_status_updated', (updatedOrder) => {
       if (updatedOrder.userId === userId) {
-        fetchMyOrders();
+        setOrders((prevOrders) =>
+          prevOrders.map((order) =>
+            order._id === updatedOrder._id ? updatedOrder : order
+          )
+        );
       }
     });
 

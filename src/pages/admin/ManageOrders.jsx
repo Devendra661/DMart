@@ -45,14 +45,18 @@ export default function ManageOrders() {
     };
     fetchOrdersAndStatuses();
 
-    socket.on('new_order', () => {
-      console.log('New order received, refreshing...');
-      fetchOrdersAndStatuses();
+    socket.on('new_order', (newOrder) => {
+      console.log('New order received:', newOrder);
+      setOrders((prevOrders) => [newOrder, ...prevOrders]);
     });
 
-    socket.on('order_status_updated', () => {
-      console.log('Order status updated, refreshing...');
-      fetchOrdersAndStatuses();
+    socket.on('order_status_updated', (updatedOrder) => {
+      console.log('Order status updated:', updatedOrder);
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === updatedOrder._id ? updatedOrder : order
+        )
+      );
     });
 
     return () => {

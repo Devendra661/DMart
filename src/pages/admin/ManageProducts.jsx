@@ -20,9 +20,9 @@ export default function ManageProducts() {
   const [searchTerm, setSearchTerm] = useState("");
 
   // ✅ Fetch products
-  const loadProducts = async (page = currentPage) => {
+  const loadProducts = async (page = currentPage, silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       const apiUrl = `${API_BASE_URL}/api/products?page=${page}&limit=${productsPerPage}&search=${searchTerm}`;
       console.log("Fetching products from:", apiUrl);
       const res = await axios.get(apiUrl);
@@ -31,11 +31,11 @@ export default function ManageProducts() {
       setTotalPages(res.data.totalPages);
       setTotalProducts(res.data.totalProducts);
       setCurrentPage(page); // Update current page after successful fetch
-      setLoading(false);
     } catch (err) {
       setError("Failed to load products");
-      setLoading(false);
       console.error("Error loading products:", err);
+    } finally {
+      if (!silent) setLoading(false);
     }
   };
 
@@ -43,7 +43,7 @@ export default function ManageProducts() {
     loadProducts(currentPage);
 
     socket.on('new_order', () => {
-      loadProducts(currentPage);
+      loadProducts(currentPage, true);
     });
 
     return () => {
