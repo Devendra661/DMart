@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext'; // Import useAuth
+import { useCart } from '../context/CartContext';
 import toast from 'react-hot-toast'; // Import toast
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '@/config';
@@ -9,6 +10,7 @@ import { API_BASE_URL } from '@/config';
 export default function Checkout() {
   const navigate = useNavigate();
   const { userId } = useAuth(); // Get userId from AuthContext
+  const { fetchCart } = useCart();
   const [cartItems, setCartItems] = useState([]); // Initialize with empty array
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // Loading state
@@ -196,6 +198,7 @@ export default function Checkout() {
       if (response.ok) {
         toast.success('Order placed successfully!', { id: loadingToast });
         setCartItems([]); // Clear local cart after successful order
+        fetchCart(); // Clear global cart context
         navigate('/order-confirmation', { state: { order: data.order } });
       } else {
         toast.error(data.message || 'Failed to place order.', { id: loadingToast });

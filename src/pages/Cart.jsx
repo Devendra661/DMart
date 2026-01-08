@@ -107,7 +107,9 @@ export default function Cart() {
                 <td className="py-3 px-4">
                   <img src={`${API_BASE_URL}${item.imageUrl}`} alt={item.name} className="w-16 h-16 object-cover rounded" />
                 </td>
-                <td className="py-3 px-4">{item.name}</td>
+                <td className="py-3 px-4" title={item.name}>
+                  {item.name.split(' ').slice(0, 4).join(' ')}{item.name.split(' ').length > 4 ? '...' : ''}
+                </td>
                 <td className="py-3 px-4">
                   <div className="flex items-center">
                     <button

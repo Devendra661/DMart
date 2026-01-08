@@ -4,21 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Hero({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentImageSlide, setCurrentImageSlide] = useState(0);
   const navigate = useNavigate();
-
-  const imageSlides = [
-    "/images/b1.jfif",
-    "/images/p1.jfif",
-  ];
-
-  // Automatic slider change every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageSlide((prev) => (prev + 1) % imageSlides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [imageSlides.length]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,7 +58,7 @@ export default function Hero({ onSearch }) {
         </motion.button>
       </motion.div>
 
-      {/* Right image slider */}
+      {/* Right image */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -80,18 +66,14 @@ export default function Hero({ onSearch }) {
         className="relative flex justify-center w-full mt-10 md:mt-0 md:w-auto"
       >
         <div className="relative w-64 h-48 overflow-hidden shadow-2xl rounded-xl md:w-96 md:h-64">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={currentImageSlide}
-              src={imageSlides[currentImageSlide]}
-              alt="Hero Slider"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0 object-cover w-full h-full"
-            />
-          </AnimatePresence>
+          <motion.img
+            src="/images/hero_img_1.png"
+            alt="Hero Image"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 object-cover w-full h-full"
+          />
         </div>
       </motion.div>
     </motion.section>

@@ -18,12 +18,16 @@ export const NotificationProvider = ({ children }) => {
 
     socket.on('new_order', (order) => {
       console.log('New order received:', order);
+      const productNames = order.items.map(item => item.name || (item.productId && item.productId.name) || 'Product').slice(0, 2).join(', ');
+      const moreCount = order.items.length - 2;
+      const message = `New Order: ${productNames}${moreCount > 0 ? ` +${moreCount} more` : ''} - ₹${order.totalAmount.toFixed(2)}`;
+      
       const newNotification = {
         id: order._id,
-        message: `New Order: ${order.items.length} items, Total: ₹${order.totalAmount.toFixed(2)}`, // More descriptive message
+        message: message,
         timestamp: new Date().toLocaleString(),
-        orderData: order, // Store the full order object if needed elsewhere
-        read: false, // Add read status
+        orderData: order,
+        read: false,
       };
       setNewOrderCount((prevCount) => prevCount + 1);
       setNotifications((prevNotifications) => [newNotification, ...prevNotifications]);
