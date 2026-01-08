@@ -110,7 +110,7 @@ const ProductCard = ({ product }) => {
   {/* Image Section */}
   <div className="relative p-6 bg-white">
     <img
-      src={`${API_BASE_URL}${product.imageUrl}`}
+      src={`${CONFIG_URL}${product.imageUrl}`}
       alt={product.name}
       className="object-contain w-full h-48 mx-auto"
     />

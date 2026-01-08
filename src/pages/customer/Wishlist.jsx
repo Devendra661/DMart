@@ -120,7 +120,7 @@ export default function Wishlist() {
             <div key={product._id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col">
               <Link to={`/shop-detail/${product._id}`}>
                 <img
-                  src={`${API_BASE_URL}${product.imageUrl}`}
+                  src={`${CONFIG_URL}${product.imageUrl}`}
                   alt={product.name}
                   className="w-full h-48 object-cover"
                 />

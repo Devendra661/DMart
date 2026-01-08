@@ -146,7 +146,7 @@ export default function ShopDetail() {
         <div className="md:w-1/2">
           <div className="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
             <img
-              src={`${API_BASE_URL}${product.imageUrl}`}
+              src={`${CONFIG_URL}${product.imageUrl}`}
               alt={product.name}
               className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-105"
             />

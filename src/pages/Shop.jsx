@@ -84,7 +84,7 @@ export default function Shop() {
                   <img
                     src={
                       firstProduct?.imageUrl
-                        ? `${API_BASE_URL}${firstProduct.imageUrl}`
+                        ? `${CONFIG_URL}${firstProduct.imageUrl}`
                         : "https://via.placeholder.com/150"
                     }
                     alt={firstProduct?.name || cat.name}
