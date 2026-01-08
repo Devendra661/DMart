@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm install --prefix server && vite build",
-    "start": "node server/server.js",
+    "start": "node server.cjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
