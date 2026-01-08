@@ -1,2 +1,2 @@
 // Redirect for Render deployment
-require('./server/server.js');
+import './server/server.cjs';
