@@ -27,15 +27,14 @@ export default function ManageOrders() {
         if (!ordersResponse.ok) throw new Error(`HTTP error! status: ${ordersResponse.status}`);
         const ordersData = await ordersResponse.json();
         
-        const activeOrders = ordersData.orders.filter(order => order.orderStatus !== 'Delivered' && order.orderStatus !== 'Cancelled');
-        setOrders(activeOrders);
+        setOrders(ordersData.orders);
         setTotalPages(ordersData.totalPages);
 
         if (availableStatuses.length === 0) {
           const statusesResponse = await fetch(`${API_BASE_URL}/api/orders/statuses`);
           if (!statusesResponse.ok) throw new Error(`HTTP error! status: ${statusesResponse.status}`);
           const statusesData = await statusesResponse.json();
-          setAvailableStatuses(statusesData.filter(status => status !== 'Delivered' && status !== 'Cancelled'));
+          setAvailableStatuses(statusesData);
         }
       } catch (err) {
         setError(err.message);
@@ -275,7 +274,7 @@ export default function ManageOrders() {
           ))}
           <button
             onClick={handleNext}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || currentOrders.length < ordersPerPage}
             className="px-3 py-1 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
           >
             Next

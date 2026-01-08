@@ -66,12 +66,9 @@ export default function Hero({ onSearch }) {
         className="relative flex justify-center w-full mt-10 md:mt-0 md:w-auto"
       >
         <div className="relative w-64 h-48 overflow-hidden shadow-2xl rounded-xl md:w-96 md:h-64">
-          <motion.img
+          <img
             src="/images/hero_img_1.png"
             alt="Hero Image"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
             className="absolute inset-0 object-cover w-full h-full"
           />
         </div>
